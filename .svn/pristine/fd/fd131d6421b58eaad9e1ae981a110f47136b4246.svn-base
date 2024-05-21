@@ -1,0 +1,159 @@
+package com.infovas.subscriptionservice.beans;
+
+import java.util.Date;
+
+public class Report {
+
+	public Date tarih;
+	public int aktifDaily;
+	public int aktifThenPasif;
+	public int pasifDaily;
+	public int aktifTop;
+	public int pasifTop;
+	public double cekDaily;
+	public double cekTop;
+	public double borcDaily;
+	public double borcTop;
+	public int bulk;
+	public int web;
+	public int adsense;
+	public int sms;
+	public int adwords;
+	public int fb;
+
+
+	public Report() {
+
+	}
+
+	public int getBulk() {
+		return bulk;
+	}
+
+	public void setBulk(int bulk) {
+		this.bulk = bulk;
+	}
+
+	public int getWeb() {
+		return web;
+	}
+
+	public void setWeb(int web) {
+		this.web = web;
+	}
+
+	public int getSms() {
+		return sms;
+	}
+
+	public void setSms(int sms) {
+		this.sms = sms;
+	}
+
+	public Date getTarih() {
+		return tarih;
+	}
+
+	public void setTarih(Date tarih) {
+		this.tarih = tarih;
+	}
+
+	public int getAktifDaily() {
+		return aktifDaily;
+	}
+
+	public void setAktifDaily(int aktifDaily) {
+		this.aktifDaily = aktifDaily;
+	}
+
+	public int getAktifThenPasif() {
+		return aktifThenPasif;
+	}
+
+	public void setAktifThenPasif(int aktifThenPasif) {
+		this.aktifThenPasif = aktifThenPasif;
+	}
+
+	public int getPasifDaily() {
+		return pasifDaily;
+	}
+
+	public void setPasifDaily(int pasifDaily) {
+		this.pasifDaily = pasifDaily;
+	}
+
+	public int getAktifTop() {
+		return aktifTop;
+	}
+
+	public void setAktifTop(int aktifTop) {
+		this.aktifTop = aktifTop;
+	}
+
+	public int getPasifTop() {
+		return pasifTop;
+	}
+
+	public void setPasifTop(int pasifTop) {
+		this.pasifTop = pasifTop;
+	}
+
+	public double getCekDaily() {
+		return cekDaily;
+	}
+
+	public void setCekDaily(double cekDaily) {
+		this.cekDaily = cekDaily;
+	}
+
+	public double getCekTop() {
+		return cekTop;
+	}
+
+	public void setCekTop(double cekTop) {
+		this.cekTop = cekTop;
+	}
+
+	public double getBorcDaily() {
+		return borcDaily;
+	}
+
+	public void setBorcDaily(double borcDaily) {
+		this.borcDaily = borcDaily;
+	}
+
+	public double getBorcTop() {
+		return borcTop;
+	}
+
+	public void setBorcTop(double borcTop) {
+		this.borcTop = borcTop;
+	}
+
+	public int getAdsense() {
+		return adsense;
+	}
+
+	public void setAdsense(int adsense) {
+		this.adsense = adsense;
+	}
+
+	public int getAdwords() {
+		return adwords;
+	}
+
+	public void setAdwords(int adwords) {
+		this.adwords = adwords;
+	}
+
+	public int getFb() {
+		return fb;
+	}
+
+	public void setFb(int fb) {
+		this.fb = fb;
+	}
+
+
+
+}

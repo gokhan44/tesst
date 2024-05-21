@@ -1,0 +1,47 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+	    <param-value>WEB-INF/beans.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<display-name>CXF Servlet</display-name>
+		<servlet-class>
+			org.apache.cxf.transport.servlet.CXFServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	    <filter>
+        <filter-name>IPAccessFilter</filter-name> <!-- mandatory -->
+        <filter-class>com.infovas.subscriptionservice.utils.IPAccessFilter</filter-class> <!-- mandatory -->
+        <init-param> <!-- activate ip filter-->
+            <param-name>isIPFilterOn</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param> <!--  development ip => 0:0:0:0:0:0:0:1 -->
+            <param-name>allowedIPs</param-name>
+            <param-value>0:0:0:0:0:0:0:1;127.0.0.1;31.210.52.213;31.210.55.226</param-value><!-- separate ip addresses by using semicolon ';' -->
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>IPAccessFilter</filter-name> <!--  mandatory -->
+        <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
+    </filter-mapping>
+	</web-app>
+

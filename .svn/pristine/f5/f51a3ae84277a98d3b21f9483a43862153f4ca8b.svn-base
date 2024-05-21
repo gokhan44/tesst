@@ -1,0 +1,62 @@
+package com.infovas.subscriptionservice.beans;
+
+import java.sql.Timestamp;
+
+public class Subscription {
+
+	private String msisdn;
+	private Timestamp startDate;
+	private String status;
+	private String subscriptionOperator;
+	private Timestamp subscriptionLastActionDate;
+	private Timestamp subscriptionRenewalDate;
+
+	public String getMsisdn() {
+		return msisdn;
+	}
+
+	public void setMsisdn(String msisdn) {
+		this.msisdn = msisdn;
+	}
+
+	public Timestamp getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Timestamp startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public Timestamp getSubscriptionLastActionDate() {
+		return subscriptionLastActionDate;
+	}
+
+	public void setSubscriptionLastActionDate(Timestamp subscriptionLastActionDate) {
+		this.subscriptionLastActionDate = subscriptionLastActionDate;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getSubscriptionOperator() {
+		return subscriptionOperator;
+	}
+
+	public void setSubscriptionOperator(String subscriptionOperator) {
+		this.subscriptionOperator = subscriptionOperator;
+	}
+
+	public Timestamp getSubscriptionRenewalDate() {
+		return subscriptionRenewalDate;
+	}
+
+	public void setSubscriptionRenewalDate(Timestamp subscriptionRenewalDate) {
+		this.subscriptionRenewalDate = subscriptionRenewalDate;
+	}
+
+}

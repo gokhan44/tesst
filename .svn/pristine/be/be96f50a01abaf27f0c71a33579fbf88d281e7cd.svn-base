@@ -1,0 +1,104 @@
+package com.infovas.subscriptionservice.beans;
+
+import java.util.Date;
+
+public class Report {
+
+	public Date tarih;
+	public int aktifDaily;
+	public int aktifThenPasif;
+	public int pasifDaily;
+	public int aktifTop;
+	public int pasifTop;
+	public double cekDaily;
+	public double cekTop;
+	public double borcDaily;
+	public double borcTop;
+
+	public Report() {
+
+	}
+
+	public Date getTarih() {
+		return tarih;
+	}
+
+	public void setTarih(Date tarih) {
+		this.tarih = tarih;
+	}
+
+	public int getAktifDaily() {
+		return aktifDaily;
+	}
+
+	public void setAktifDaily(int aktifDaily) {
+		this.aktifDaily = aktifDaily;
+	}
+
+	public int getAktifThenPasif() {
+		return aktifThenPasif;
+	}
+
+	public void setAktifThenPasif(int aktifThenPasif) {
+		this.aktifThenPasif = aktifThenPasif;
+	}
+
+	public int getPasifDaily() {
+		return pasifDaily;
+	}
+
+	public void setPasifDaily(int pasifDaily) {
+		this.pasifDaily = pasifDaily;
+	}
+
+	public int getAktifTop() {
+		return aktifTop;
+	}
+
+	public void setAktifTop(int aktifTop) {
+		this.aktifTop = aktifTop;
+	}
+
+	public int getPasifTop() {
+		return pasifTop;
+	}
+
+	public void setPasifTop(int pasifTop) {
+		this.pasifTop = pasifTop;
+	}
+
+	public double getCekDaily() {
+		return cekDaily;
+	}
+
+	public void setCekDaily(double cekDaily) {
+		this.cekDaily = cekDaily;
+	}
+
+	public double getCekTop() {
+		return cekTop;
+	}
+
+	public void setCekTop(double cekTop) {
+		this.cekTop = cekTop;
+	}
+
+	public double getBorcDaily() {
+		return borcDaily;
+	}
+
+	public void setBorcDaily(double borcDaily) {
+		this.borcDaily = borcDaily;
+	}
+
+	public double getBorcTop() {
+		return borcTop;
+	}
+
+	public void setBorcTop(double borcTop) {
+		this.borcTop = borcTop;
+	}
+
+
+
+}

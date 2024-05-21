@@ -1,0 +1,50 @@
+package com.infovas.subscriptionservice.ws;
+
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement()
+public class CountSubsResp implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@XmlElement(name = "aktif")
+	public int aktif;
+	@XmlElement(name = "pasif")
+	public int pasif;
+	@XmlElement(name = "toplam")
+	public int toplam;
+
+	public CountSubsResp() {
+		
+	}
+
+	public int getAktif() {
+		return aktif;
+	}
+
+	public void setAktif(int aktif) {
+		this.aktif = aktif;
+	}
+
+	public int getPasif() {
+		return pasif;
+	}
+
+	public void setPasif(int pasif) {
+		this.pasif = pasif;
+	}
+
+	public int getToplam() {
+		return toplam;
+	}
+
+	public void setToplam(int toplam) {
+		this.toplam = toplam;
+	}
+}

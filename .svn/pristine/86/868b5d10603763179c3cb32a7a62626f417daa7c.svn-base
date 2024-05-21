@@ -1,0 +1,29 @@
+package com.infovas.subscriptionservice.beans;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.jdbc.core.RowMapper;
+
+public class ReportRM implements RowMapper {
+	public Object mapRow(ResultSet rs, int line) throws SQLException {
+
+		Report ms = new Report();
+
+		ms.setTarih(rs.getDate("TARIH"));
+		ms.setAktifDaily(rs.getInt("AKTIF_DAILY"));
+		ms.setAktifThenPasif(rs.getInt("AKTIF_THEN_PASIF_DAILY"));
+		ms.setPasifDaily(rs.getInt("PASIF_DAILY"));
+		ms.setAktifTop(rs.getInt("AKTIF_TOP"));
+		ms.setPasifTop(rs.getInt("PASIF_TOP"));
+		ms.setCekDaily(rs.getDouble("CEKILEN_DAILY"));
+		ms.setCekTop(rs.getDouble("CEKILEN_TOP"));
+		ms.setBorcDaily(rs.getDouble("BORC_DAILY"));
+		ms.setBorcTop(rs.getDouble("BORC_TOP"));
+
+		return ms;
+
+	}
+	
+
+
+}

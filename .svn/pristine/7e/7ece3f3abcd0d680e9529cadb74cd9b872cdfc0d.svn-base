@@ -1,0 +1,203 @@
+package com.infovas.subscriptionservice.ws;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement()
+public class ReportResponse implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@XmlElement(name = "tarih")
+	public String tarih;
+	@XmlElement(name = "aktifDaily")
+	public int aktifDaily;
+	@XmlElement(name = "aktifThenPasif")
+	public int aktifThenPasif;
+	@XmlElement(name = "pasifDaily")
+	public int pasifDaily;
+	@XmlElement(name = "aktifTop")
+	public int aktifTop;
+	@XmlElement(name = "pasifTop")
+	public int pasifTop;
+	@XmlElement(name = "cekDaily")
+	public double cekDaily;
+	@XmlElement(name = "cekTop")
+	public double cekTop;
+	@XmlElement(name = "borcDaily")
+	public double borcDaily;
+	@XmlElement(name = "borcTop")
+	public double borcTop;
+	@XmlElement(name = "web")
+	public int web;
+	@XmlElement(name = "bulk")
+	public int bulk;
+	@XmlElement(name = "adsense")
+	public int adsense;
+	@XmlElement(name = "sms")
+	public int sms;
+	@XmlElement(name = "adwords")
+	public int adwords;
+	@XmlElement(name = "fb")
+	public int fb;
+
+	public ReportResponse() {
+
+	}
+	
+	public ReportResponse(String tarih, int aktifDaily, int aktifThenPasif,
+			int pasifDaily, int aktifTop, int pasifTop, double cekDaily,
+			double cekTop, double borcDaily, double borcTop, int web, int bulk,
+			int adsense, int sms, int adwords, int fb) {
+		this.tarih = tarih;
+		this.aktifDaily = aktifDaily;
+		this.aktifThenPasif = aktifThenPasif;
+		this.pasifDaily = pasifDaily;
+		this.aktifTop = aktifTop;
+		this.pasifTop = pasifTop;
+		this.cekDaily = cekDaily;
+		this.cekTop = cekTop;
+		this.borcDaily = borcDaily;
+		this.borcTop = borcTop;
+		this.web = web;
+		this.bulk = bulk;
+		this.adsense = adsense;
+		this.sms = sms;
+		this.adwords = adwords;
+		this.fb = fb;
+	}
+	
+	public int getFb() {
+		return fb;
+	}
+
+	public void setFb(int fb) {
+		this.fb = fb;
+	}
+
+	public int getAdsense() {
+		return adsense;
+	}
+
+	public void setAdsense(int adsense) {
+		this.adsense = adsense;
+	}
+
+	public int getAdwords() {
+		return adwords;
+	}
+
+	public void setAdwords(int adwords) {
+		this.adwords = adwords;
+	}
+
+	public int getBulk() {
+		return bulk;
+	}
+
+	public void setBulk(int bulk) {
+		this.bulk = bulk;
+	}
+
+	public int getWeb() {
+		return web;
+	}
+
+	public void setWeb(int web) {
+		this.web = web;
+	}
+
+	public int getSms() {
+		return sms;
+	}
+
+	public void setSms(int sms) {
+		this.sms = sms;
+	}
+
+	public String getTarih() {
+		return tarih;
+	}
+
+	public void setTarih(String tarih) {
+		this.tarih = tarih;
+	}
+
+	public int getAktifDaily() {
+		return aktifDaily;
+	}
+
+	public void setAktifDaily(int aktifDaily) {
+		this.aktifDaily = aktifDaily;
+	}
+
+	public int getAktifThenPasif() {
+		return aktifThenPasif;
+	}
+
+	public void setAktifThenPasif(int aktifThenPasif) {
+		this.aktifThenPasif = aktifThenPasif;
+	}
+
+	public int getPasifDaily() {
+		return pasifDaily;
+	}
+
+	public void setPasifDaily(int pasifDaily) {
+		this.pasifDaily = pasifDaily;
+	}
+
+	public int getAktifTop() {
+		return aktifTop;
+	}
+
+	public void setAktifTop(int aktifTop) {
+		this.aktifTop = aktifTop;
+	}
+
+	public int getPasifTop() {
+		return pasifTop;
+	}
+
+	public void setPasifTop(int pasifTop) {
+		this.pasifTop = pasifTop;
+	}
+
+	public double getCekDaily() {
+		return cekDaily;
+	}
+
+	public void setCekDaily(double cekDaily) {
+		this.cekDaily = cekDaily;
+	}
+
+	public double getCekTop() {
+		return cekTop;
+	}
+
+	public void setCekTop(double cekTop) {
+		this.cekTop = cekTop;
+	}
+
+	public double getBorcDaily() {
+		return borcDaily;
+	}
+
+	public void setBorcDaily(double borcDaily) {
+		this.borcDaily = borcDaily;
+	}
+
+	public double getBorcTop() {
+		return borcTop;
+	}
+
+	public void setBorcTop(double borcTop) {
+		this.borcTop = borcTop;
+	}
+
+}

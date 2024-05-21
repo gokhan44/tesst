@@ -1,0 +1,20 @@
+package com.infovas.subscriptionservice.beans;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+public class MsisdnRM implements  RowMapper{
+
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		
+		Msisdn rm=new Msisdn();
+		rm.setMsisdn(rs.getString(1));
+		rm.setPassword(rs.getString(2));
+		rm.setIs_used(rs.getInt(3));
+
+		return rm;
+	}
+	
+}

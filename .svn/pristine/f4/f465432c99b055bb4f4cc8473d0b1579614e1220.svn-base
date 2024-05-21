@@ -1,0 +1,248 @@
+package com.infovas.subscriptionservice.ws;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.infovas.subscriptionservice.beans.Msisdn;
+import com.infovas.subscriptionservice.beans.Report;
+import com.infovas.subscriptionservice.beans.ResponsePasswords;
+import com.infovas.subscriptionservice.beans.Subscription;
+import com.infovas.subscriptionservice.dao.DbOperations;
+import com.infovas.subscriptionservice.utils.Utils;
+
+public class SubsService {
+	// log4j configuration
+	private static final Logger logger = Logger.getLogger(SubsService.class);
+
+	// spring configuration
+	ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+	DbOperations dbAdapter = context.getBean(DbOperations.class);
+	Utils utl = new Utils();   
+	
+	@GET
+	@Path("doSubscription/{msisdn}/{channel}")
+	@Produces("application/json")
+	public Response doSubscription(@PathParam("msisdn") String msisdn,@PathParam("channel") String channel) {
+
+		Response response = new Response();
+	    String resultSubs="";
+
+		try {
+			boolean check=dbAdapter.checkIcraReceiverControl(msisdn.replaceFirst("90", ""),"ABONE");
+			if(check){
+		    dbAdapter.insertIcraReceiverControl(msisdn.replaceFirst("90", ""),"ABONE");
+			int count= dbAdapter.insertMdlSmsReceiver(msisdn.replaceFirst("90", ""),"ABONE",channel);
+			if(count==1)
+			resultSubs="true";
+			}else{
+			resultSubs="false";	
+			}
+	        response.setResult(resultSubs);
+	        logger.info("[ActiveSubscription]-[Msisdn="+msisdn +"|Result:"+ response.getResult() +"]");
+					
+		} catch (Exception e) {
+			logger.error("ActiveSubscriptionError||" + e);
+			response.setResult("false");
+		}
+		return response;
+
+	}
+	
+	@GET
+	@Path("closeSubscription/{msisdn}")
+	@Produces("application/json")
+	public Response closeSubscription(
+			@PathParam("msisdn") String msisdn) {
+
+		Response response = new Response();
+	    String resultSubs="";
+		try {
+			boolean check=dbAdapter.checkIcraReceiverControl(msisdn.replaceFirst("90", ""),"IPTAL");
+		   if(check){
+		   dbAdapter.insertIcraReceiverControl(msisdn.replaceFirst("90", ""),"IPTAL");
+		   int count= dbAdapter.insertMdlSmsReceiver(msisdn.replaceFirst("90", ""),"IPTAL","111");
+		   if(count==1)
+		   resultSubs="true";
+		   }else{
+		   resultSubs="false";  
+		   }
+	       response.setResult(resultSubs);
+	       logger.info("[closeSubscription]-[Msisdn="+msisdn + "|Result:"+ response.getResult() +"]");
+					
+			
+		} catch (Exception e) {
+			logger.error("closeSubscriptionError||" + e);
+			response.setResult("false");
+		}
+		return response;
+
+	}
+	
+	
+	@GET
+	@Path("checkSubscription/{msisdn}")
+	@Produces("application/json")
+	public SubsResponse checkSubscription(@PathParam("msisdn") String msisdn) {
+
+	    SubsResponse response = new SubsResponse();
+	    
+		String status = dbAdapter.subscriptionCheck(msisdn.replaceFirst("90", ""));
+		if (status.equals("2")) {
+			List<Subscription> subs=dbAdapter.subscriptionDetail(msisdn.replaceFirst("90", ""));
+			response.setResultCode(Utils.aktifResultCode);
+			response.setResult(Utils.aktifResult);
+			response.setStartDate(subs.get(0).getStartDate());
+			response.setRenewalDate(subs.get(0).getSubscriptionRenewalDate());
+			// abone aktif 
+		}else  {
+			
+		  	response.setResultCode(Utils.pasifResultCode);
+			response.setResult(Utils.pasifResult);
+			// abone degil
+			
+		} 
+		logger.info("[CheckSubscription]-[Msisdn:" + msisdn + "|Result:"+ response.getResult()+"]");
+
+		return response;
+
+	}
+	
+	@GET
+	@Path("countSubscription")
+	@Produces("application/json")
+	public CountSubsResp countSubscription() {
+
+	    CountSubsResp response = new CountSubsResp();
+		int aktif = dbAdapter.countSubscriptionAktif();
+		int pasif = dbAdapter.countSubscriptionPasif();
+		int toplam=aktif+pasif;
+
+		int bulk= dbAdapter.countSubscriptionType("BULK");
+		int sms= dbAdapter.countSubscriptionType("SMS");
+		int web= dbAdapter.countSubscriptionType("WEB");
+		int adsense= dbAdapter.countSubscriptionType("ADSENSE");
+		int adwords= dbAdapter.countSubscriptionType("ADWORDS");
+		
+		response.setAktif(aktif);
+		response.setPasif(pasif);
+		response.setToplam(toplam);
+		response.setAdsense(adsense);
+		response.setBulk(bulk);
+		response.setSms(sms);
+		response.setWeb(web);
+		response.setAdwords(adwords);
+	
+		logger.info("[countSubscription]-[AKTIF:" + aktif + "|PASIF:"+ pasif +  "|TOPLAM:"+ toplam +"]");
+		logger.info("[countSubscriptionType]-[Bulk:" + bulk + "|Sms:"+ sms +  "|Web:"+ web + "|Adsense:"+ adsense +"|Adwords="+adwords+"]");
+
+		return response;
+
+	}
+	
+	@GET
+	@Path("/report/{startDate}/{endDate}")
+	@Produces("application/json")
+	public List<ReportResponse> report(
+			@PathParam("startDate") String startDate,@PathParam("endDate") String endDate) {
+
+		List<ReportResponse> resp = new ArrayList<ReportResponse>();
+
+		try {
+			List<Report> tmpList = new ArrayList<Report>();
+
+			tmpList = dbAdapter.reportQuery(startDate, endDate);
+
+			for (Report temp : tmpList) {
+				ReportResponse response = new ReportResponse();
+				String str = new SimpleDateFormat("yyyy-MM-dd").format(temp.getTarih());
+				response.setAktifDaily(temp.getAktifDaily());
+				response.setAktifThenPasif(temp.getAktifThenPasif());
+				response.setPasifDaily(temp.getPasifDaily());
+				response.setAktifTop(temp.getAktifTop());
+				response.setPasifTop(temp.getPasifTop());
+				response.setCekDaily(temp.getCekDaily());
+				response.setCekTop(temp.getCekTop());
+				response.setBorcDaily(temp.getBorcDaily());
+				response.setBorcTop(temp.getBorcTop());
+				response.setAdsense(temp.getAdsense());
+				response.setBulk(temp.getBulk());
+				response.setSms(temp.getSms());
+				response.setWeb(temp.getWeb());
+				response.setAdwords(temp.getAdwords());
+				response.setTarih(str);
+				resp.add(response);
+				logger.info("[report]-["+
+						    "|tarih:" + response.getTarih() +
+						    "|aktifDaily:"+ response.getAktifDaily()+ 
+						    "|aktifThenPasif:"+ response.getAktifThenPasif()+
+						    "|pasifDaily:"+ response.getPasifDaily()+
+						    "|aktifTop:"+ response.getAktifTop()+
+						    "|pasifTop:"+ response.getPasifTop()+
+						    "|cekDaily:"+ response.getCekDaily()+ 
+						    "|cekTop:"+ response.getCekTop()+
+						    "|borcDaily:"+ response.getBorcDaily()+ 
+						    "|borcTop:"+ response.getBorcTop()+ 
+						    "|adsense:"+ response.getAdsense()+ 
+						    "|bulk:"+ response.getBulk()+
+						    "|sms:"+ response.getSms()+
+						    "|adwords:"+ response.getAdwords()+
+						    "|web:"+ response.getWeb()+"]");
+
+		    }
+
+		} catch (Exception e) {
+
+			logger.error(e);
+
+		}
+		return resp;
+	}
+	
+	@GET
+	@Path("checkPassword/{password}")
+	@Produces("application/json")
+	public ResponsePasswords checkPassword(@PathParam("password") String password) {
+	    ResponsePasswords response = new ResponsePasswords();
+	    String msisdn="";
+	    int is_used=0;
+		try {
+			List<Msisdn> msisdnList= dbAdapter.getPasswordMsisdn(password);
+			
+			if(msisdnList!=null && msisdnList.size()>0){
+				is_used=msisdnList.get(0).getIs_used();
+				msisdn=msisdnList.get(0).getMsisdn();
+				password=msisdnList.get(0).getPassword();
+				dbAdapter.updateIsUsed(msisdn,password,(is_used+1));
+			    logger.info("[checkPassword]-[Msisdn:" + msisdn + "|Password="+password+"|IsUsed:"+ is_used);
+		 	 response.setMsisdn("90"+msisdn);
+		
+			}
+			else{
+				//password is use or not equal one msisdn
+			 response.setMsisdn("NULL");
+			}
+		} catch (Exception e) {
+			logger.error("checkPasswordError||" + e);
+			 response.setMsisdn("error");
+		}
+		return response;
+
+	}
+	
+
+	public Utils getUtl() {
+		return utl;
+	}
+
+	public void setUtl(Utils utl) {
+		this.utl = utl;
+	}
+}

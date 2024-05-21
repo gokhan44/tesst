@@ -1,0 +1,7 @@
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/aveastk_dev?useUnicode=true&characterEncoding=utf-8
+username=av**
+password=abf**
+initialSize=4
+maxActive=6
+minIdle=3

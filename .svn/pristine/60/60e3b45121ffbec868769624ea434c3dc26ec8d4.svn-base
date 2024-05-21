@@ -1,0 +1,218 @@
+package com.infovas.subscriptionservice.dao;
+
+
+import java.util.List;
+import javax.sql.DataSource;
+import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+
+import com.infovas.subscriptionservice.beans.Report;
+import com.infovas.subscriptionservice.beans.ReportRM;
+import com.infovas.subscriptionservice.beans.ReturnMessageRM;
+import com.infovas.subscriptionservice.beans.Subscription;
+import com.infovas.subscriptionservice.beans.SubscriptionRM;
+
+public class DbOperations{
+
+	private static final Logger logger = Logger.getLogger(DbOperations.class);
+
+	private SimpleJdbcInsert insertTemplate;
+	private JdbcTemplate selectTemplate;
+	private JdbcTemplate jdbcTemplate;
+
+	public void setDataSource(DataSource dataSource) {
+		this.insertTemplate = new SimpleJdbcInsert(dataSource);
+
+		if (insertTemplate.getTableName() != "SUBSCRIPTION") {
+			insertTemplate.setTableName("SUBSCRIPTION");
+			insertTemplate.setGeneratedKeyName("ID");
+		}
+		insertTemplate.compile();
+		selectTemplate = new JdbcTemplate(dataSource);
+	}
+
+	    public String checkStatus;
+		public String checkIfHasRecord;
+		public String checkIfPassive;
+		public String insertMdlSmsReceiver;
+		public String countSubscription;
+		public String reportQuery;
+		public String countSubscriptionAktif;
+		public String countSubscriptionPasif;
+		
+
+		public String getCountSubscriptionAktif() {
+			return countSubscriptionAktif;
+		}
+
+		public void setCountSubscriptionAktif(String countSubscriptionAktif) {
+			this.countSubscriptionAktif = countSubscriptionAktif;
+		}
+
+		public String getCountSubscriptionPasif() {
+			return countSubscriptionPasif;
+		}
+
+		public void setCountSubscriptionPasif(String countSubscriptionPasif) {
+			this.countSubscriptionPasif = countSubscriptionPasif;
+		}
+
+		public String getInsertMdlSmsReceiver() {
+			return insertMdlSmsReceiver;
+		}
+
+		public void setInsertMdlSmsReceiver(String insertMdlSmsReceiver) {
+			this.insertMdlSmsReceiver = insertMdlSmsReceiver;
+		}
+
+		public String getCheckStatus() {
+			return checkStatus;
+		}
+
+		public void setCheckStatus(String checkStatus) {
+			this.checkStatus = checkStatus;
+		}
+
+		public String getReportQuery() {
+			return reportQuery;
+		}
+
+		public void setReportQuery(String reportQuery) {
+			this.reportQuery = reportQuery;
+		}
+
+		public String getCountSubscription() {
+			return countSubscription;
+		}
+
+		public void setCountSubscription(String countSubscription) {
+			this.countSubscription = countSubscription;
+		}
+
+		public String getCheckIfHasRecord() {
+			return checkIfHasRecord;
+		}
+
+		public void setCheckIfHasRecord(String checkIfHasRecord) {
+			this.checkIfHasRecord = checkIfHasRecord;
+		}
+
+		public String getCheckIfPassive() {
+			return checkIfPassive;
+		}
+
+		public void setCheckIfPassive(String checkIfPassive) {
+			this.checkIfPassive = checkIfPassive;
+		}
+	
+		
+		public String subscriptionCheck(String msisdn) {
+			String result = null;
+			logger.info(checkStatus+" "+msisdn);
+			List<Subscription> subscriber = selectTemplate.query(checkStatus,new Object[] { msisdn }, new SubscriptionRM());
+
+			if (subscriber == null || subscriber.size() <= 0|| subscriber.isEmpty()) {
+				result = "1";//ADAM YOK
+			} else {
+				String status = subscriber.get(0).getStatus();
+				if (status.equals("ACTIVE")) {
+					result = "2";
+				}else
+				{
+					result = "1";
+				}
+			}
+			return result;
+		}
+
+		public int insertMdlSmsReceiver(String msisdn,String message)
+		{
+				logger.info(insertMdlSmsReceiver+" "+msisdn+" "+ message);
+				return selectTemplate.update(insertMdlSmsReceiver,new Object[] {message,msisdn});
+		}
+
+
+		public int countSubscription(String string) {
+			int count = 0;
+			logger.info(countSubscription+" "+string);
+			count = selectTemplate.queryForInt(countSubscription,
+					new Object[] { string });
+	
+			return count;
+		}
+
+		public java.util.List reportQuery(String startDate, String endDate) {
+	
+			return selectTemplate.query(reportQuery, new Object[] {startDate, endDate }, new ReportRM());
+
+		}
+		
+		public java.util.List subscriptionDetail(String msisdn) {
+			String result = null;
+			logger.info(checkStatus+" "+msisdn);
+			return selectTemplate.query(checkStatus,
+					new Object[] { msisdn }, new SubscriptionRM());
+
+
+		}
+		
+		public String checkIcraReceiverControl;
+		public String insertIcraReceiverControl;
+		
+		
+		
+		public String getCheckIcraReceiverControl() {
+			return checkIcraReceiverControl;
+		}
+
+		public void setCheckIcraReceiverControl(String checkIcraReceiverControl) {
+			this.checkIcraReceiverControl = checkIcraReceiverControl;
+		}
+
+		public String getInsertIcraReceiverControl() {
+			return insertIcraReceiverControl;
+		}
+
+		public void setInsertIcraReceiverControl(String insertIcraReceiverControl) {
+			this.insertIcraReceiverControl = insertIcraReceiverControl;
+		}
+
+		public boolean checkIcraReceiverControl(String msisdn,String message) {
+			boolean result = true;
+			int count = 0;
+			logger.info(checkIcraReceiverControl + " " + msisdn+" "+message);
+
+			count = selectTemplate.queryForInt(checkIcraReceiverControl,new Object[] { msisdn,message });
+
+			if (count > 0) {
+				result = false;
+			}
+			return result;
+		}
+		
+		public int insertIcraReceiverControl(String msisdn,String message)
+		{
+				logger.info(insertIcraReceiverControl+" "+msisdn+" "+ message);
+				return selectTemplate.update(insertIcraReceiverControl,new Object[] {msisdn,message});
+		}
+		
+		public int countSubscriptionAktif() {
+			int count = 0;
+			logger.info(countSubscriptionAktif);
+			count = selectTemplate.queryForInt(countSubscriptionAktif,
+					new Object[] { });
+	
+			return count;
+		}
+		public int countSubscriptionPasif() {
+			int count = 0;
+			logger.info(countSubscriptionPasif);
+			count = selectTemplate.queryForInt(countSubscriptionPasif,
+					new Object[] {});
+	
+			return count;
+		}
+
+		
+}

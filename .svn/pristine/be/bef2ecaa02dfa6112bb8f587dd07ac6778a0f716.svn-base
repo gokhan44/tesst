@@ -1,0 +1,23 @@
+package com.infovas.subscriptionservice.beans;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+public class SubscriptionRM implements RowMapper{
+
+	public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+		Subscription ss = new Subscription();
+
+		ss.setMsisdn(rs.getString("msisdn"));
+		ss.setStartDate(rs.getTimestamp("start_date"));
+		ss.setStatus(rs.getString("status_msisdn"));
+		ss.setSubscriptionOperator(rs.getString("subscription_operator"));
+		ss.setSubscriptionLastActionDate(rs.getTimestamp("subscription_last_action_date"));
+		ss.setSubscriptionRenewalDate(rs.getTimestamp("subscription_renewal_date"));
+
+		return ss;
+	}
+
+}

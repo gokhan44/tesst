@@ -1,0 +1,100 @@
+package com.infovas.subscriptionservice.ws;
+
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement()
+public class CountSubsResp implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@XmlElement(name = "aktif")
+	public int aktif;
+	@XmlElement(name = "pasif")
+	public int pasif;
+	@XmlElement(name = "toplam")
+	public int toplam;
+	@XmlElement(name = "web")
+	public int web;
+	@XmlElement(name = "bulk")
+	public int bulk;
+	@XmlElement(name = "adsense")
+	public int adsense;
+	@XmlElement(name = "sms")
+	public int sms;
+	@XmlElement(name = "adwords")
+	public int adwords;
+
+	public CountSubsResp() {
+
+	}
+
+	public int getAktif() {
+		return aktif;
+	}
+
+	public void setAktif(int aktif) {
+		this.aktif = aktif;
+	}
+
+	public int getPasif() {
+		return pasif;
+	}
+
+	public void setPasif(int pasif) {
+		this.pasif = pasif;
+	}
+
+	public int getToplam() {
+		return toplam;
+	}
+
+	public void setToplam(int toplam) {
+		this.toplam = toplam;
+	}
+
+	public int getWeb() {
+		return web;
+	}
+
+	public void setWeb(int web) {
+		this.web = web;
+	}
+
+	public int getBulk() {
+		return bulk;
+	}
+
+	public void setBulk(int bulk) {
+		this.bulk = bulk;
+	}
+
+	public int getSms() {
+		return sms;
+	}
+
+	public void setSms(int sms) {
+		this.sms = sms;
+	}
+
+	public int getAdsense() {
+		return adsense;
+	}
+
+	public void setAdsense(int adsense) {
+		this.adsense = adsense;
+	}
+
+	public int getAdwords() {
+		return adwords;
+	}
+
+	public void setAdwords(int adwords) {
+		this.adwords = adwords;
+	}
+}

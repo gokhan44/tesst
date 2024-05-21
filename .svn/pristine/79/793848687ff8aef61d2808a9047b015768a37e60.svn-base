@@ -1,0 +1,18 @@
+package com.infovas.subscriptionservice.beans;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+public class ReturnMessageRM implements  RowMapper{
+
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		
+		ReturnMessage rm=new ReturnMessage();
+		rm.setMessage(rs.getString("message"));
+		rm.setMessageType(rs.getString("message_type"));
+		return rm;
+	}
+	
+}

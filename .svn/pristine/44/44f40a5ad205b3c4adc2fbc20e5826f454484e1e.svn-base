@@ -1,0 +1,10 @@
+checkStatus=SELECT * FROM icra_subscription where msisdn=? 
+reportQuery=select * from icra_report_table where tarih between STR_TO_DATE(?,'%Y%m%d') and STR_TO_DATE(?,'%Y%m%d') order by tarih desc
+countSubscription=select count(*) from icra_subscription WHERE status_msisdn=? 
+insertMdlSmsReceiver=INSERT INTO batch_mdl_sms_receiver (creation_date,destination,message_text,source_msisdn,message_date,message_id,message_sequence)  VALUES (now(),'9227',?,?,now(),111,2)
+checkIcraReceiverControl=select count(*) from icra_receiver_control WHERE msisdn=?  and message_text=? and insert_date>now()-INTERVAL 1 MINUTE
+insertIcraReceiverControl=insert into icra_receiver_control (msisdn,message_text,insert_date)  VALUES (?,?,now())
+countSubscriptionAktif=select count(*) from icra_subscription WHERE status_msisdn='ACTIVE' 
+countSubscriptionPasif=select count(*) from icra_subscription WHERE status_msisdn='DEACTIVE' or status_msisdn like '%SUSPEND'
+
+

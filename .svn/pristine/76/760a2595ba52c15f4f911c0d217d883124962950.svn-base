@@ -1,0 +1,12 @@
+package com.infovas.subscriptionservice.utils;
+
+public class Utils {
+	
+	public static String aktifResult="AKTIF";
+	public static String pasifResult="PASIF";
+	public static int aktifResultCode=1;
+	public static int pasifResultCode=0;
+	public static int limitResultCode=-1;
+	
+	
+}
